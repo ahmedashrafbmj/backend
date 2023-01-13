@@ -1,0 +1,38 @@
+version: "3.7"
+services:
+
+  db:
+    restart: always
+    
+    environment:
+      - POSTGRES_DB=tutor
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=changeme
+
+    ports:
+      - 9000:9000
+
+
+  tutorweb:
+    build: .
+    restart: always
+
+    volumes:
+      - .:/app
+      - .:/uploads
+
+ports:
+- "9000:9000"
+
+depends_on:
+- db
+
+
+
+redis:
+restart: always
+image: redis:latest
+ports:
+- "9000:9000"
+volumes:
+- ./redisdata:/data
