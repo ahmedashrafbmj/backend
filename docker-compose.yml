@@ -2,6 +2,7 @@ version: "3.7"
 services:
 
   db:
+    image: postgres
     restart: always
     
     environment:
@@ -10,7 +11,7 @@ services:
       - POSTGRES_PASSWORD=changeme
 
     ports:
-      - 9000:9000
+      - 5432:5432
 
 
   tutorweb:
@@ -18,20 +19,21 @@ services:
     restart: always
 
     volumes:
-   - /app/node_modules
       - .:/app
-ports:
-- "9000:9000"
+      - .:/uploads
 
-depends_on:
-- db
+    ports:
+      - "5000:5000"
+
+     
+    depends_on:
+      - db
 
 
 
-redis:
-restart: always
-image: redis:latest
-ports:
-- "9000:9000"
-volumes:
-- ./redisdata:/data
+  redis:
+    restart: always
+    image: redis:latest
+    ports:
+      - "6379:6379"
+   
