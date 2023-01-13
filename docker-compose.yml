@@ -18,9 +18,8 @@ services:
     restart: always
 
     volumes:
+   - /app/node_modules
       - .:/app
-      - .:/uploads
-
 ports:
 - "9000:9000"
 
